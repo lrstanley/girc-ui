@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "girc-ui",
+  "outputfilename": "girc-ui",
+  "frontend:install": "pnpm install",
+  "frontend:build": "pnpm run build",
+  "frontend:dev:watcher": "pnpm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Liam Stanley",
+    "email": "me@liamstanley.io"
+  },
+  "info": {
+    "productName": "girc-ui",
+    "copyright": "Liam Stanley 2023",
+    "comments": "https://github.com/lrstanley/girc-ui"
+  },
+  "wailsjsdir": "frontend/src/lib"
+}

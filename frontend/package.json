@@ -1,0 +1,125 @@
+{
+	"name": "frontend",
+	"version": "0.0.1",
+	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
+	},
+	"devDependencies": {
+		"@fontsource/fira-mono": "^4.5.10",
+		"@iconify/json": "^2.2.54",
+		"@neoconfetti/svelte": "^1.0.0",
+		"@skeletonlabs/skeleton": "^1.2.0",
+		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/kit": "^1.15.7",
+		"@tailwindcss/forms": "^0.5.3",
+		"@typescript-eslint/eslint-plugin": "^5.59.0",
+		"@typescript-eslint/parser": "^5.59.0",
+		"autoprefixer": "^10.4.14",
+		"eslint": "^8.39.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"postcss": "^8.4.23",
+		"prettier": "^2.8.7",
+		"prettier-plugin-svelte": "^2.10.0",
+		"svelte": "^3.58.0",
+		"svelte-check": "^3.2.0",
+		"svelte-local-storage-store": "^0.4.0",
+		"tailwindcss": "^3.3.1",
+		"tslib": "^2.5.0",
+		"typescript": "^5.0.4",
+		"unplugin-icons": "^0.16.1",
+		"vite": "^4.3.1"
+	},
+	"postcss": {
+		"plugins": {
+			"autoprefixer": {},
+			"tailwindcss": {}
+		}
+	},
+	"type": "module",
+	"prettier": {
+		"arrowParens": "always",
+		"bracketSameLine": false,
+		"bracketSpacing": true,
+		"quoteProps": "as-needed",
+		"semi": false,
+		"singleQuote": false,
+		"trailingComma": "none",
+		"useTabs": false,
+		"htmlWhitespaceSensitivity": "ignore",
+		"plugins": [
+			"prettier-plugin-svelte"
+		],
+		"pluginSearchDirs": [
+			"."
+		],
+		"overrides": [
+			{
+				"files": "*.svelte",
+				"options": {
+					"parser": "svelte"
+				}
+			}
+		]
+	},
+	"eslintConfig": {
+		"env": {
+			"browser": true,
+			"es2017": true,
+			"node": true
+		},
+		"parser": "@typescript-eslint/parser",
+		"extends": [
+			"eslint:recommended",
+			"plugin:@typescript-eslint/recommended",
+			"plugin:tailwindcss/recommended",
+			"prettier"
+		],
+		"overrides": [
+			{
+				"files": [
+					"*.svelte"
+				],
+				"processor": "svelte3/svelte3"
+			}
+		],
+		"settings": {
+			"svelte3/typescript": "typescript"
+		},
+		"ignorePatterns": [
+			"node_modules",
+			"/build",
+			"/.svelte-kit",
+			"/package",
+			".env",
+			".env.*",
+			".git",
+			"pnpm-lock.yaml",
+			"package-lock.json"
+		],
+		"parserOptions": {
+			"ecmaVersion": 2020,
+			"sourceType": "module"
+		},
+		"root": true,
+		"rules": {
+			"@typescript-eslint/no-explicit-any": "off",
+			"newline-per-chained-call": "off",
+			"tailwindcss/classnames-order": "off",
+			"tailwindcss/enforces-negative-arbitrary-values": "error",
+			"tailwindcss/enforces-shorthand": "error",
+			"tailwindcss/migration-from-tailwind-2": "error",
+			"tailwindcss/no-arbitrary-value": "off",
+			"tailwindcss/no-contradicting-classname": "error",
+			"tailwindcss/no-custom-classname": "off"
+		}
+	}
+}

@@ -1,0 +1,12 @@
+*.test
+*.prof
+*.lock
+*.txt
+*.log
+.env
+.gitapicache
+**/node_modules
+build/
+frontend/.svelte-kit
+frontend/dist
+frontend/*.md5
