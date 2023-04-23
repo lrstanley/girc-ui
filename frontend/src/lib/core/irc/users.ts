@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) Liam Stanley <me@liamstanley.io>. All rights reserved. Use
+ * of this source code is governed by the MIT license that can be found in
+ * the LICENSE file.
+ */
+
 import { GetUsersForChannel } from "$wails/go/main/App.js"
 import { EventsOn } from "$wails/runtime/runtime.js"
 import { writable } from "svelte/store"

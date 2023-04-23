@@ -1,9 +1,12 @@
+// Copyright (c) Liam Stanley <me@liamstanley.io>. All rights reserved. Use
+// of this source code is governed by the MIT license that can be found in
+// the LICENSE file.
+
 package main
 
 import (
 	"context"
 	"fmt"
-	"strings"
 	"sync"
 	"time"
 
@@ -13,8 +16,7 @@ import (
 
 // App struct
 type App struct {
-	ctx context.Context
-
+	ctx     context.Context
 	mu      sync.RWMutex
 	clients []*girc.Client
 }
@@ -24,54 +26,27 @@ func NewApp() *App {
 	return &App{}
 }
 
-type LogWriter struct {
-	ctx context.Context
-}
-
-func (l *LogWriter) Write(p []byte) (n int, err error) {
-	runtime.LogDebug(l.ctx, strings.TrimSuffix(string(p), "\n"))
-	return len(p), nil
-}
-
 // startup is called when the app starts. The context is saved
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
-	// runtime.Hide(ctx)
+	// a.clients = []*girc.Client{
+	// 	girc.New(girc.Config{
+	// 		Server:  "localhost",
+	// 		Port:    6667,
+	// 		Nick:    "girc-ui-1",
+	// 		User:    "girc-ui-1",
+	// 		Name:    "girc-ui-1",
+	// 		Version: "girc-ui debug version",
+	// 		Debug:   &LogWriter{ctx},
+	// 	}),
+	// }
 
-	a.clients = []*girc.Client{
-		girc.New(girc.Config{
-			Server:  "localhost",
-			Port:    6667,
-			Nick:    "girc-ui-1",
-			User:    "girc-ui-1",
-			Name:    "girc-ui-1",
-			Version: "girc-ui debug version",
-			Debug:   &LogWriter{ctx},
-		}),
-		// girc.New(girc.Config{
-		// 	Server:  "localhost",
-		// 	Port:    6667,
-		// 	Nick:    "girc-ui-2",
-		// 	User:    "girc-ui-2",
-		// 	Name:    "girc-ui-2",
-		// 	Version: "girc-ui debug version",
-		// 	Debug:   &LogWriter{ctx},
-		// }),
-		// girc.New(girc.Config{
-		// 	Server:  "localhost",
-		// 	Port:    6667,
-		// 	Nick:    "girc-ui-3",
-		// 	User:    "girc-ui-3",
-		// 	Name:    "girc-ui-3",
-		// 	Version: "girc-ui debug version",
-		// 	Debug:   &LogWriter{ctx},
-		// }),
-	}
+	a.clients = []*girc.Client{}
 
-	// a.mu.RLock()
-	// defer a.mu.RUnlock()
+	a.mu.RLock()
+	defer a.mu.RUnlock()
 
 	for _, client := range a.clients {
 		go func(c *girc.Client) {
@@ -104,6 +79,29 @@ func (a *App) startup(ctx context.Context) {
 			}
 		}(client)
 	}
+
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-time.After(1 * time.Second):
+			}
+
+			a.mu.RLock()
+			runtime.EventsEmit(ctx, "IRC_ALL", &girc.Event{
+				Command: "TEST",
+				Params:  []string{"test"},
+				Source: &girc.Source{
+					Name:  "test",
+					Ident: "ident",
+					Host:  "host",
+				},
+				Timestamp: time.Now(),
+			})
+			a.mu.RUnlock()
+		}
+	}()
 }
 
 // domReady is called after front-end resources have been loaded
@@ -127,19 +125,18 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 	return false
 }
 
-// shutdown is called at application termination
+// shutdown is called at application termination.
 func (a *App) shutdown(ctx context.Context) {
-	// Perform your teardown here
 }
 
-// Greet returns a greeting for the given name
+// Greet returns a greeting for the given name.
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
 func (a *App) GetUsersForChannel(channel string) []*girc.User {
-	// a.mu.RLock()
-	// defer a.mu.RUnlock()
+	a.mu.RLock()
+	defer a.mu.RUnlock()
 
 	for _, client := range a.clients {
 		ch := client.LookupChannel(channel)

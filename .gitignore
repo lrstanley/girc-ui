@@ -10,3 +10,4 @@ build/
 frontend/.svelte-kit
 frontend/dist
 frontend/*.md5
+frontend/package-lock.json

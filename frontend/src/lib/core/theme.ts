@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) Liam Stanley <me@liamstanley.io>. All rights reserved. Use
+ * of this source code is governed by the MIT license that can be found in
+ * the LICENSE file.
+ */
+
 import { writable } from "svelte/store"
 import skeletonBase from "@skeletonlabs/skeleton/styles/all.css?inline"
 import crimson from "@skeletonlabs/skeleton/themes/theme-crimson.css?inline"
