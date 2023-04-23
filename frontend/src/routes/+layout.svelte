@@ -1,15 +1,18 @@
 <script lang="ts">
-    import { onMount, onDestroy } from "svelte"
-    import { AppBar } from "@skeletonlabs/skeleton"
     import IconTheme from "~icons/fluent/paint-bucket-16-regular"
     import IconChat from "~icons/fluent/chat-16-regular"
     import IconMinimize from "~icons/fluent/minimize-24-regular"
     import IconMaximize from "~icons/fluent/maximize-24-regular"
     import IconClose from "~icons/fluent/dismiss-24-regular"
-    import { Quit, WindowMinimise, WindowToggleMaximise } from "$wails/runtime/runtime.js"
 
+    import { AppBar } from "@skeletonlabs/skeleton"
     import "./styles.css"
     import { baseTheme, themes, currentTheme } from "$lib/core/theme"
+
+    import { onMount, onDestroy } from "svelte"
+    import { Quit, WindowMinimise, WindowToggleMaximise } from "$wails/runtime/runtime.js"
+    import { eventSetup } from "$lib/core/irc/events"
+    import { userSetup } from "$lib/core/irc/users"
 
     let loaded = false
     onMount(() => (loaded = true))
@@ -19,11 +22,7 @@
         document.body.setAttribute("data-theme", value)
     })
 
-    import { eventSetup } from "$lib/core/irc/events"
-    import { userSetup } from "$lib/core/irc/users"
-
     onMount(() => {
-        // WHY TF DOESN'T THIS WORK ON INITIAL RENDER?
         const eventDestroy = eventSetup()
         const userDestroy = userSetup()
 
