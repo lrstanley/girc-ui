@@ -18,3 +18,10 @@ updates:
       timezone: "America/New_York"
       day: "monday"
       time: "12:10"
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      timezone: "America/New_York"
+      day: "monday"
+      time: "12:15"
