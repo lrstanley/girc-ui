@@ -9,10 +9,8 @@
     import "./styles.css"
     import { baseTheme, themes, currentTheme } from "$lib/core/theme"
 
-    import { onMount, onDestroy } from "svelte"
+    import { onMount } from "svelte"
     import { Quit, WindowMinimise, WindowToggleMaximise } from "$wails/runtime/runtime.js"
-    import { eventSetup } from "$lib/core/irc/events"
-    import { userSetup } from "$lib/core/irc/users"
 
     let loaded = false
     onMount(() => (loaded = true))
@@ -21,30 +19,9 @@
 
         document.body.setAttribute("data-theme", value)
     })
-
-    onMount(() => {
-        const eventDestroy = eventSetup()
-        const userDestroy = userSetup()
-
-        onDestroy(eventDestroy)
-        onDestroy(userDestroy)
-    })
 </script>
 
 <svelte:head>
-    <script>
-        if (!window.hasOwnProperty("wailsbindings")) {
-            let wails_ipc = document.createElement("script")
-            wails_ipc.setAttribute("src", "/wails/ipc.js")
-
-            let wails_runtime = document.createElement("script")
-            wails_runtime.setAttribute("src", "/wails/runtime.js")
-
-            document.head.appendChild(wails_ipc)
-            document.head.appendChild(wails_runtime)
-        }
-    </script>
-
     {@html `<style>${$currentTheme ? themes[$currentTheme] : ""}</style>`}
     {@html `<style>${baseTheme}</style>`}
 </svelte:head>

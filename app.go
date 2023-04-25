@@ -31,19 +31,17 @@ func NewApp() *App {
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 
-	// a.clients = []*girc.Client{
-	// 	girc.New(girc.Config{
-	// 		Server:  "localhost",
-	// 		Port:    6667,
-	// 		Nick:    "girc-ui-1",
-	// 		User:    "girc-ui-1",
-	// 		Name:    "girc-ui-1",
-	// 		Version: "girc-ui debug version",
-	// 		Debug:   &LogWriter{ctx},
-	// 	}),
-	// }
-
-	a.clients = []*girc.Client{}
+	a.clients = []*girc.Client{
+		girc.New(girc.Config{
+			Server:  "localhost",
+			Port:    6667,
+			Nick:    "girc-ui-1",
+			User:    "girc-ui-1",
+			Name:    "girc-ui-1",
+			Version: "girc-ui debug version",
+			Debug:   &LogWriter{ctx},
+		}),
+	}
 
 	a.mu.RLock()
 	defer a.mu.RUnlock()

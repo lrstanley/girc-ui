@@ -40,9 +40,6 @@
                     <ul>
                         {#each $users as user}
                             <li class="px-2 text-sm">
-                                <!-- <a href={item < 1 ? "/" : "/about"}>
-                                    <span class="flex-auto">user-{item}</span>
-                                </a> -->
                                 <a>
                                     <span class="flex-auto">{user.nick} ({user.extras.name})</span>
                                 </a>
@@ -65,9 +62,9 @@
         <div class="flex flex-col flex-grow-0 flex-shrink max-h-[490px] overflow-y-auto">
             {#each $events as event}
                 <div class="odd:bg-slate-900/70 even:bg-slate-700/70">
-                    <span class="text-purple-600">@{event.source.name}@{event.source.host}</span>
+                    <span class="text-purple-600">@{event.source?.name}@{event.source?.host}</span>
                     <span>
-                        {event.params.join(" ")}
+                        {event.params?.join(" ")}
                     </span>
                 </div>
             {/each}
