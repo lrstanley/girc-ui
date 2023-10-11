@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/lrstanley/girc v0.0.0-20230303230257-fefe1cab7695
-	github.com/wailsapp/wails/v2 v2.4.1
+	github.com/wailsapp/wails/v2 v2.5.1
 )
 
 require (
