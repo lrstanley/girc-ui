@@ -36,7 +36,7 @@
 		"tslib": "^2.5.0",
 		"typescript": "^5.0.4",
 		"unplugin-icons": "^0.16.1",
-		"vite": "^4.3.1"
+		"vite": "^4.3.9"
 	},
 	"postcss": {
 		"plugins": {
