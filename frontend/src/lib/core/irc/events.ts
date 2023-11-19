@@ -4,7 +4,7 @@
  * the LICENSE file.
  */
 
-import { EventsOn } from "$wails/runtime/runtime.js"
+import { EventsOn } from "$wails/runtime/runtime"
 import { onMount } from "svelte"
 import { readable } from "svelte/store"
 
@@ -24,18 +24,30 @@ export interface Event {
   echo?: boolean
 }
 
-export const events = readable<Event[]>([], (set) => {
-  const events: Event[] = []
-
-  const updateEvents = (e: Event) => {
-    if (e == null) return
-
-    events.push(e)
-    set(events)
-  }
-
+export const latestStateUpdate = readable<number>(-1, (set) => {
   onMount(() => {
-    // TODO: fetch events that have already happened, from the backend.
-    return EventsOn("IRC_ALL", updateEvents)
+    return EventsOn("irc-update-state", (e: Event) => set(Date.now()))
   })
 })
+
+export const latestGeneralUpdate = readable<number>(-1, (set) => {
+  onMount(() => {
+    return EventsOn("irc-update-general", (e: Event) => set(Date.now()))
+  })
+})
+
+// export const events = readable<Event[]>([], (set) => {
+//   const events: Event[] = []
+
+//   const updateEvents = (e: Event) => {
+//     if (e == null) return
+
+//     events.push(e)
+//     set(events)
+//   }
+
+//   onMount(() => {
+//     // TODO: fetch events that have already happened, from the backend.
+//     return EventsOn("IRC_ALL", updateEvents)
+//   })
+// })

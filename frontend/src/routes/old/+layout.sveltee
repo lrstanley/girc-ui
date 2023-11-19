@@ -1,34 +1,19 @@
 <script lang="ts">
+    import "./styles.css"
+
     import IconTheme from "~icons/fluent/paint-bucket-16-regular"
     import IconChat from "~icons/fluent/chat-16-regular"
     import IconMinimize from "~icons/fluent/minimize-24-regular"
     import IconMaximize from "~icons/fluent/maximize-24-regular"
     import IconClose from "~icons/fluent/dismiss-24-regular"
 
-    import { AppBar } from "@skeletonlabs/skeleton"
-    import "./styles.css"
-    import { baseTheme, themes, currentTheme } from "$lib/core/theme"
-
     import { onMount } from "svelte"
     import { Quit, WindowMinimise, WindowToggleMaximise } from "$wails/runtime/runtime.js"
-
-    let loaded = false
-    onMount(() => (loaded = true))
-    currentTheme.subscribe((value) => {
-        if (!loaded) return
-
-        document.body.setAttribute("data-theme", value)
-    })
 </script>
-
-<svelte:head>
-    {@html `<style>${$currentTheme ? themes[$currentTheme] : ""}</style>`}
-    {@html `<style>${baseTheme}</style>`}
-</svelte:head>
 
 <div class="flex flex-col w-full h-full">
     <header class="flex wails-draggable rounded-tl-md">
-        <AppBar
+        <!-- <AppBar
             padding="px-2 p-[2px] w-full"
             gridColumns="grid-cols-3"
             slotTrail="place-content-end"
@@ -80,7 +65,7 @@
                     </button>
                 </div>
             </svelte:fragment>
-        </AppBar>
+        </AppBar> -->
     </header>
 
     <main class="flex flex-col flex-grow overflow-y-auto bg-surface-900">

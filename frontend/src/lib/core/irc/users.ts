@@ -4,10 +4,11 @@
  * the LICENSE file.
  */
 
-import { GetUsersForChannel } from "$wails/go/main/App.js"
-import { EventsOn } from "$wails/runtime/runtime.js"
-import { onMount } from "svelte"
-import { readable } from "svelte/store"
+import { currentChannelName } from "$lib/core/irc/channels"
+import { latestStateUpdate } from "$lib/core/irc/events"
+import { currentServerID } from "$lib/core/irc/servers"
+import { GetUsersForChannel } from "$wails/go/servermanager/ServerManager"
+import { derived } from "svelte/store"
 
 export interface Permissions {
   owner?: boolean
@@ -38,15 +39,13 @@ export interface User {
   extras?: Extras
 }
 
-export const users = readable<User[]>([], (set) => {
-  const updateUsers = (u: User[]) => {
-    Array.isArray(u) ? set(u) : set([])
-  }
+export const users = derived<
+  [typeof currentServerID, typeof currentChannelName, typeof latestStateUpdate],
+  User[]
+>([currentServerID, currentChannelName, latestStateUpdate], ([$serverID, $channelName, $uid], set) => {
+  if (!$serverID || !$channelName) return set([])
 
-  onMount(() => {
-    GetUsersForChannel("#girc-ui").then(updateUsers)
-    return EventsOn("irc-update-state", () => {
-      GetUsersForChannel("#girc-ui").then(updateUsers)
-    })
-  })
+  GetUsersForChannel($serverID, $channelName).then((users) =>
+    Array.isArray(users) ? set(users) : set([])
+  )
 })
