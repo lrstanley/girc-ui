@@ -74,12 +74,6 @@ Below are a few guidelines if you would like to contribute:
 
 
 
-
-
-
-
-
-
 ### :hamster: Golang
 
    * See [golang/go/wiki/CodeReviewComments](https://github.com/golang/go/wiki/CodeReviewComments)
@@ -87,6 +81,12 @@ Below are a few guidelines if you would like to contribute:
      Go-related files. This should be available for any editor that supports
      `gopls`, however you can also run it locally with `golangci-lint run`
      after installing it.
+
+
+
+
+
+
 
 
 
